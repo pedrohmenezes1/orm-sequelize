@@ -1,7 +1,7 @@
-import Sequelize from "sequelize";
-import DatabaseConfig from "../config/database";
+import Sequelize from 'sequelize';
+import DatabaseConfig from '../config/database';
 
-import Pessoas from "../app/models/Pessoas";
+import Pessoas from '../app/models/Pessoas';
 
 // Buffer
 const models = [Pessoas];

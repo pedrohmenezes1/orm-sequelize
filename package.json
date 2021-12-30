@@ -1,7 +1,6 @@
 {
   "name": "orm-sequelize",
   "version": "1.0.0",
-  "type": "module",
   "main": "./src/app.js",
   "license": "MIT",
   "scripts": {

@@ -1,6 +1,6 @@
-import express from "express";
-import routes from "./routes";
-import "./database";
+import express from 'express';
+import routes from './routes';
+import './database';
 
 /* app.listen(config.get('app.port'), () => console.log('A API do projeto orm está funcionando!'));
  */
