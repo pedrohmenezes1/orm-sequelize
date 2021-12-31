@@ -1,5 +1,5 @@
 import express from 'express';
-import routes from './routes';
+import apiRotas from './routes/routes';
 import './database';
 
 /* app.listen(config.get('app.port'), () => console.log('A API do projeto orm está funcionando!'));
@@ -17,7 +17,7 @@ class App {
   }
 
   routes() {
-    this.server.use(routes);
+    this.server.use(apiRotas);
   }
 }
 

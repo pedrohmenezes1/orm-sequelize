@@ -13,7 +13,6 @@ module.exports = {
       },
       ativo: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
         allowNull: false,
       },
       email: {
@@ -34,6 +33,5 @@ module.exports = {
         allowNull: false,
       },
     }),
-
-  down: () => {},
+  down: (queryInterface) => queryInterface.dropTable('Pessoas'),
 };
