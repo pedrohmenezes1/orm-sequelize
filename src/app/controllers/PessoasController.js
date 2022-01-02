@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
 import Pessoas from '../models/Pessoas';
 
-class CriarPessoas {
+class ControllerPessoas {
   // Cadastra uma única pessoa ;)
   async criar(req, res) {
     const schema = Yup.object().shape({
-      nome: Yup.string('Erro: Necessário preencher o campo name!').required(
-        'Erro: Necessário preencher o campo name!'
+      nome: Yup.string('Erro: Necessário preencher o campo nome!').required(
+        'Erro: Necessário preencher o campo nome!'
       ),
       ativo: Yup.boolean(
         'Erro: Necessário preencher o campo ativo com True ou False!'
@@ -54,5 +54,17 @@ class CriarPessoas {
         .send({ error: 'Erro ao registrar uma nova pessoa' });
     }
   }
+
+  async ListarTodos(req, res) {
+    try {
+      const listarPessoas = await Pessoas.findAll();
+      return res.status(200).send({ listarPessoas });
+    } catch (erro) {
+      return res
+        .status(500)
+        .send({ error: 'Erro ao carregar lista de pessoas ' });
+    }
+  }
 }
-export default new CriarPessoas();
+
+export default new ControllerPessoas();

@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import CriarPessoas from '../app/controllers/PessoasController';
+import ControllerPessoas from '../app/controllers/PessoasController';
 
 const rotaPessoas = Router();
 
-rotaPessoas.post('/pessoas', CriarPessoas.criar);
+rotaPessoas.post('/pessoas', ControllerPessoas.criar);
+
+rotaPessoas.get('/pessoas', ControllerPessoas.ListarTodos);
 
 export default rotaPessoas;
