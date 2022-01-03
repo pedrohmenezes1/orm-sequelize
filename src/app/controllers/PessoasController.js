@@ -55,14 +55,52 @@ class ControllerPessoas {
     }
   }
 
-  async ListarTodos(req, res) {
+  async listarTodos(req, res) {
     try {
       const listarPessoas = await Pessoas.findAll();
       return res.status(200).send({ listarPessoas });
     } catch (erro) {
       return res
-        .status(500)
+        .status(400)
         .send({ error: 'Erro ao carregar lista de pessoas ' });
+    }
+  }
+
+  async listarUm(req, res) {
+    const { id } = req.params;
+    try {
+      const listarPessoa = await Pessoas.findOne({ where: { id: Number(id) } });
+
+      return res.status(200).send({ listarPessoa });
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao listar pessoa por Id' });
+    }
+  }
+
+  async atualizarUm(req, res) {
+    const { id } = req.params;
+    const atualizarPessoa = req.body;
+    try {
+      await Pessoas.update(atualizarPessoa, { where: { id: Number(id) } });
+
+      const atualizado = await Pessoas.findOne({ where: { id: Number(id) } });
+
+      return res.status(200).send({ atualizado });
+    } catch (err) {
+      return res.status(404).send({ error: 'Erro ao atualizar pessoas' });
+    }
+  }
+
+  async deletarUm(req, res) {
+    const { id } = req.params;
+    try {
+      await Pessoas.destroy({ where: { id: Number(id) } });
+
+      const deletado = `id ${id} foi deletado`;
+
+      return res.status(204).json({ deletado });
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao excluir pessoa' });
     }
   }
 }
