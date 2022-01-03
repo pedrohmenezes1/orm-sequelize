@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import Pessoas from '../models/Pessoas';
+import Pessoas from '../models/pessoas';
 
 class ControllerPessoas {
   // Cadastra uma única pessoa ;)

@@ -11,12 +11,19 @@ class Pessoas extends Model {
       },
       {
         sequelize,
+        tableName: 'pessoas',
       }
     );
-    Pessoas.associate = () => {
-      // associações
-    };
-    return Pessoas;
+    return this;
+  }
+
+  static associate(models) {
+    this.hasMany(models.turmas, {
+      foreignKey: 'docente_id',
+    });
+    this.hasMany(models.matriculas, {
+      foreignKey: 'estudante_id',
+    });
   }
 }
 export default Pessoas;

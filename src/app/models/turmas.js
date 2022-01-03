@@ -1,23 +1,35 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Turmas extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  };
-  Turmas.init({
-    data_inicio: DataTypes.DATEONLY
-  }, {
-    sequelize,
-    modelName: 'Turmas',
-  });
-  return Turmas;
-};
+import Sequelize, { Model } from 'sequelize';
+
+class Turmas extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        data_inicio: Sequelize.DATEONLY,
+      },
+
+      {
+        sequelize,
+        tableName: 'turmas',
+      }
+    );
+
+    return this;
+  }
+
+  static associate(models) {
+    this.hasMany(models.matriculas, {
+      foreignKey: 'turma_id',
+      as: 'matriculas',
+    });
+    this.belongsTo(models.pessoas, {
+      foreignKey: 'docente_id',
+      as: 'pessoas',
+    });
+    this.belongsTo(models.niveis, {
+      foreignKey: 'nivel_id',
+      as: 'niveis',
+    });
+  }
+}
+
+export default Turmas;
