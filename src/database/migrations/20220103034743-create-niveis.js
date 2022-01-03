@@ -13,6 +13,7 @@ module.exports = {
 
       descr_nivel: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
 
       created_at: {

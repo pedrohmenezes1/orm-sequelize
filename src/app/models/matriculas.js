@@ -9,18 +9,20 @@ class Matriculas extends Model {
 
       {
         sequelize,
-        tableName: 'matriculas',
+        tableName: 'Matriculas',
       }
     );
     return this;
   }
 
   static associate(models) {
-    this.belongsTo(models.pessoas, {
+    this.belongsTo(models.Pessoas, {
       foreignKey: 'estudante_id',
+      as: 'pessoas',
     });
-    this.belongsTo(models.turmas, {
+    this.belongsTo(models.Turmas, {
       foreignKey: 'turma_id',
+      as: 'turmas',
     });
   }
 }

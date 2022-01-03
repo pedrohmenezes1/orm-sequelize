@@ -11,18 +11,20 @@ class Pessoas extends Model {
       },
       {
         sequelize,
-        tableName: 'pessoas',
+        tableName: 'Pessoas',
       }
     );
     return this;
   }
 
   static associate(models) {
-    this.hasMany(models.turmas, {
+    this.hasMany(models.Turmas, {
       foreignKey: 'docente_id',
+      as: 'turmas',
     });
-    this.hasMany(models.matriculas, {
+    this.hasMany(models.Matriculas, {
       foreignKey: 'estudante_id',
+      as: 'matriculas',
     });
   }
 }

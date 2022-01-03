@@ -9,7 +9,7 @@ class Turmas extends Model {
 
       {
         sequelize,
-        tableName: 'turmas',
+        tableName: 'Turmas',
       }
     );
 
@@ -17,15 +17,15 @@ class Turmas extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.matriculas, {
+    this.hasMany(models.Matriculas, {
       foreignKey: 'turma_id',
       as: 'matriculas',
     });
-    this.belongsTo(models.pessoas, {
+    this.belongsTo(models.Pessoas, {
       foreignKey: 'docente_id',
       as: 'pessoas',
     });
-    this.belongsTo(models.niveis, {
+    this.belongsTo(models.Niveis, {
       foreignKey: 'nivel_id',
       as: 'niveis',
     });

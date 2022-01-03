@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import rotaPessoas from './pessoasRoutes';
+import rotaNiveis from './niveisRouters';
+import rotaTurmas from './turmasRoutes';
 
 const apiRotas = new Router();
 
@@ -7,6 +9,6 @@ const apiRotas = new Router();
   res.status(200).json({ message: 'Orm-Sequelize' });
 }); */
 
-apiRotas.use('/api', rotaPessoas);
+apiRotas.use('/api', rotaPessoas, rotaNiveis, rotaTurmas);
 
 export default apiRotas;

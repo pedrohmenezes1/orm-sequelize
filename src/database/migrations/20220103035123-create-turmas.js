@@ -13,6 +13,7 @@ module.exports = {
 
       data_inicio: {
         type: Sequelize.DATEONLY,
+        allowNull: false,
       },
       docente_id: {
         allowNull: false,

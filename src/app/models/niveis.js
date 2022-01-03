@@ -8,16 +8,16 @@ class Niveis extends Model {
       },
       {
         sequelize,
-        tableName: 'niveis',
+        tableName: 'Niveis',
       }
     );
     return this;
   }
 
   static associate(models) {
-    this.hasMany(models.turmas, {
+    this.hasMany(models.Turmas, {
       foreignKey: 'nivel_id',
-      as: 'turma',
+      as: 'Turmas',
     });
   }
 }
