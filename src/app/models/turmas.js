@@ -9,7 +9,7 @@ class Turmas extends Model {
 
       {
         sequelize,
-        tableName: 'Turmas',
+        tableName: 'turmas',
       }
     );
 

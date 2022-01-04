@@ -9,7 +9,7 @@ class Matriculas extends Model {
 
       {
         sequelize,
-        tableName: 'Matriculas',
+        tableName: 'matriculas',
       }
     );
     return this;

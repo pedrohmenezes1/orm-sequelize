@@ -11,7 +11,7 @@ class Pessoas extends Model {
       },
       {
         sequelize,
-        tableName: 'Pessoas',
+        tableName: 'pessoas',
       }
     );
     return this;

@@ -13,4 +13,23 @@ rotaPessoas.put('/pessoas/:id', ControllerPessoas.atualizarUm);
 
 rotaPessoas.delete('/pessoas/:id', ControllerPessoas.deletarUm);
 
+rotaPessoas.get(
+  '/pessoas/:estudanteId/matricula/:matriculaId',
+  ControllerPessoas.listarUmaMatricula
+);
+rotaPessoas.get('/matriculas', ControllerPessoas.index);
+
+rotaPessoas.post(
+  '/pessoas/:estudanteId/matricula',
+  ControllerPessoas.criarMatricula
+);
+rotaPessoas.put(
+  '/pessoas/:estudanteId/matricula/:matriculaId',
+  ControllerPessoas.atualizarMatricula
+);
+rotaPessoas.delete(
+  '/pessoas/:estudanteId/matricula/:matriculaId',
+  ControllerPessoas.deletarMatricula
+);
+
 export default rotaPessoas;

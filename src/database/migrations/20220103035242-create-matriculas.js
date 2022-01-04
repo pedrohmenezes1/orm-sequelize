@@ -13,6 +13,7 @@ module.exports = {
 
       status: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       estudante_id: {
         allowNull: false,
