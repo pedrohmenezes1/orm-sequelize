@@ -3,16 +3,12 @@ module.exports = {
     await queryInterface.createTable('Matriculas', {
       id: {
         allowNull: false,
-
         autoIncrement: true,
-
         primaryKey: true,
-
         type: Sequelize.INTEGER,
       },
-
       status: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(20),
         allowNull: false,
       },
       estudante_id: {
@@ -25,17 +21,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Turmas', key: 'id' },
       },
-
       created_at: {
         allowNull: false,
-
         type: Sequelize.DATE,
       },
-
       updated_at: {
         allowNull: false,
-
         type: Sequelize.DATE,
+      },
+      deleted_at: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
     });
   },

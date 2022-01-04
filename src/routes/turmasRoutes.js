@@ -13,4 +13,6 @@ rotaTurmas.put('/turmas/:id', ControllerTurmas.atualizarUm);
 
 rotaTurmas.delete('/turmas/:id', ControllerTurmas.deletarUm);
 
+rotaTurmas.post('/turmas/:id/recuperar', ControllerTurmas.recuperarTurma);
+
 export default rotaTurmas;

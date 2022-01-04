@@ -10,6 +10,13 @@ class Matriculas extends Model {
       {
         sequelize,
         tableName: 'matriculas',
+        paranoid: true,
+        defaultScope: {
+          where: { status: 'confirmado' },
+        },
+        scopes: {
+          all: { where: {} },
+        },
       }
     );
     return this;

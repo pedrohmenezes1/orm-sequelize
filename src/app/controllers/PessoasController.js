@@ -6,9 +6,9 @@ class ControllerPessoas {
   // Cadastra uma única pessoa ;)
   async criar(req, res) {
     const schema = Yup.object().shape({
-      nome: Yup.string('Erro: Necessário preencher o campo nome!').required(
-        'Erro: Necessário preencher o campo nome!'
-      ),
+      nome: Yup.string('Erro: Necessário preencher o campo nome!')
+        .required('Erro: Necessário preencher o campo nome!')
+        .min(4, 'campo nome tem que ser maior que 4 caracteres'),
       ativo: Yup.boolean(
         'Erro: Necessário preencher o campo ativo com True ou False!'
       ).required('Erro: Necessário preencher o campo ativo!'),
@@ -56,16 +56,23 @@ class ControllerPessoas {
     }
   }
 
+  async listarTodosAtivos(req, res) {
+    try {
+      const listarAtivos = await Pessoas.findAll({
+        attributes: ['id', 'nome', 'ativo', 'email', 'role'],
+      });
+      return res.status(200).send({ listarAtivos });
+    } catch (erro) {
+      return res
+        .status(400)
+        .send({ error: 'Erro ao carregar lista de pessoas ' });
+    }
+  }
+
   async listarTodos(req, res) {
     try {
-      const listarPessoas = await Pessoas.findAll({
+      const listarPessoas = await Pessoas.scope('all').findAll({
         attributes: ['id', 'nome', 'ativo', 'email', 'role'],
-        include: [
-          {
-            model: Matriculas,
-            as: 'matriculas',
-          },
-        ],
       });
       return res.status(200).send({ listarPessoas });
     } catch (erro) {
@@ -104,12 +111,24 @@ class ControllerPessoas {
     const { id } = req.params;
     try {
       await Pessoas.destroy({ where: { id: Number(id) } });
-
-      const deletado = `id ${id} foi deletado`;
-
-      return res.status(204).json({ deletado });
+      const mensagem = `id ${id} foi deletado`;
+      return res.status(200).json({ mensagem });
     } catch (err) {
       return res.status(400).send({ error: 'Erro ao excluir pessoa' });
+    }
+  }
+
+  async recuperarPessoa(req, res) {
+    // eslint-disable-next-line no-unused-vars
+    const { id } = req.params;
+    try {
+      await Pessoas.restore({ where: { id: Number(id) } });
+
+      const mensagem = `id ${id} foi recuperado`;
+
+      return res.status(200).json({ mensagem });
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao recuperar esse id!' });
     }
   }
 
@@ -127,22 +146,29 @@ class ControllerPessoas {
     }
   }
 
-  async index(req, res) {
+  async matriculasConfirmadas(req, res) {
     try {
       const matricula = await Matriculas.findAll({
         atributes: ['id', 'status'],
-        include: [
-          {
-            model: Pessoas,
-            as: 'pessoas',
-          },
-        ],
       });
       return res.status(200).json(matricula);
     } catch (erro) {
       return res
         .status(400)
-        .send({ error: 'Erro ao carregar lista de pessoas ' });
+        .send({ error: 'Erro ao carregar lista de matrículas ' });
+    }
+  }
+
+  async matriculasTodas(req, res) {
+    try {
+      const matricula = await Matriculas.scope('all').findAll({
+        atributes: ['id', 'status'],
+      });
+      return res.status(200).json(matricula);
+    } catch (erro) {
+      return res
+        .status(400)
+        .send({ error: 'Erro ao carregar lista de matrículas ' });
     }
   }
 
@@ -202,11 +228,71 @@ class ControllerPessoas {
     try {
       await Matriculas.destroy({ where: { id: Number(matriculaId) } });
 
-      const deletado = `id ${matriculaId} foi deletado`;
+      const mensagem = `id ${matriculaId} foi deletado`;
 
-      return res.status(204).json({ deletado });
+      return res.status(200).json({ mensagem });
     } catch (err) {
       return res.status(400).send({ error: 'Erro ao excluir matrícula' });
+    }
+  }
+
+  async recuperarMatricula(req, res) {
+    // eslint-disable-next-line no-unused-vars
+    const { estudanteId, matriculaId } = req.params;
+    try {
+      await Matriculas.restore({
+        where: { id: Number(matriculaId), estudante_id: Number(estudanteId) },
+      });
+
+      const mensagem = `id ${matriculaId} foi recuperado`;
+
+      return res.status(200).json({ mensagem });
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao recuperar esse id!' });
+    }
+  }
+
+  async pegarMatriculas(req, res) {
+    const { estudanteId } = req.params;
+    try {
+      const pessoa = await Pessoas.findOne({
+        where: { id: Number(estudanteId) },
+      });
+      const matriculas = await pessoa.getAulasMatriculadas();
+      return res.status(200).json(matriculas);
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao pegar matrícula' });
+    }
+  }
+
+  async listarTudo(req, res) {
+    try {
+      const pessoas = await Pessoas.scope('all').findAndCountAll({
+        attributes: ['id', 'nome', 'ativo', 'email', 'role'],
+        include: [
+          {
+            model: Matriculas,
+            as: 'aulasMatriculadas',
+          },
+        ],
+      });
+      return res.status(200).send({ pessoas });
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao pegar o index' });
+    }
+  }
+
+  async pegarMatriculasPorTurma(req, res) {
+    const { turmaId } = req.params;
+    try {
+      const todasMatriculas = await Matriculas.findAndCountAll({
+        where: { turma_id: Number(turmaId), status: 'confirmado' },
+        limit: 10,
+        order: [['estudante_id', 'ASC']],
+      });
+      return res.status(200).json(todasMatriculas);
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao pegar matrícula' });
     }
   }
 }

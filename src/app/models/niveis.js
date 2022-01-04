@@ -9,6 +9,7 @@ class Niveis extends Model {
       {
         sequelize,
         tableName: 'niveis',
+        paranoid: true,
       }
     );
     return this;

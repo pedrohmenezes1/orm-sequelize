@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-expressions */
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Turmas from '../models/turmas';
 
 class ControllerTurmas {
@@ -35,8 +37,13 @@ class ControllerTurmas {
   }
 
   async listarTodos(req, res) {
+    const { data_inicial, data_final } = req.query;
+    const where = {};
+    data_inicial || data_final ? (where.data_inicio = {}) : null;
+    data_inicial ? (where.data_inicio[Op.gte] = data_inicial) : null;
+    data_final ? (where.data_inicio[Op.lte] = data_final) : null;
     try {
-      const listarTurmas = await Turmas.findAll();
+      const listarTurmas = await Turmas.findAll({ where });
       return res.status(200).send({ listarTurmas });
     } catch (erro) {
       return res
@@ -80,6 +87,19 @@ class ControllerTurmas {
       return res.status(204).json({ deletado });
     } catch (err) {
       return res.status(400).send({ error: 'Erro ao excluir turma' });
+    }
+  }
+
+  async recuperarTurma(req, res) {
+    const { id } = req.params;
+    try {
+      await Turmas.restore({ where: { id: Number(id) } });
+
+      const mensagem = `id ${id} foi recuperado`;
+
+      return res.status(200).json({ mensagem });
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao recuperar esse id!' });
     }
   }
 }

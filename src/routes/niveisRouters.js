@@ -13,4 +13,6 @@ rotaNiveis.put('/niveis/:id', ControllerNivel.atualizarUm);
 
 rotaNiveis.delete('/niveis/:id', ControllerNivel.deletarUm);
 
+rotaNiveis.post('/niveis/:id/recuperar', ControllerNivel.recuperarNivel);
+
 export default rotaNiveis;

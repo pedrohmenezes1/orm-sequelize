@@ -3,14 +3,10 @@ module.exports = {
     await queryInterface.createTable('Turmas', {
       id: {
         allowNull: false,
-
         autoIncrement: true,
-
         primaryKey: true,
-
         type: Sequelize.INTEGER,
       },
-
       data_inicio: {
         type: Sequelize.DATEONLY,
         allowNull: false,
@@ -25,16 +21,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Niveis', key: 'id' },
       },
-
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-
       updated_at: {
         allowNull: false,
-
         type: Sequelize.DATE,
+      },
+      deleted_at: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
     });
   },

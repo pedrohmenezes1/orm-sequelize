@@ -80,6 +80,19 @@ class ControllerNivel {
       return res.status(400).send({ error: 'Erro ao excluir níveis' });
     }
   }
+
+  async recuperarNivel(req, res) {
+    const { id } = req.params;
+    try {
+      await Niveis.restore({ where: { id: Number(id) } });
+
+      const mensagem = `id ${id} foi recuperado`;
+
+      return res.status(200).json({ mensagem });
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao recuperar esse id!' });
+    }
+  }
 }
 
 export default new ControllerNivel();

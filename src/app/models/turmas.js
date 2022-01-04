@@ -10,6 +10,7 @@ class Turmas extends Model {
       {
         sequelize,
         tableName: 'turmas',
+        paranoid: true,
       }
     );
 
