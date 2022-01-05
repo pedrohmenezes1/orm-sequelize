@@ -13,11 +13,18 @@ rotaPessoas.get('/pessoas/all', ControllerPessoas.listarTodos);
 
 rotaPessoas.get('/pessoas/:id', ControllerPessoas.listarUm);
 
+rotaPessoas.get('/pessoas/matricula/lotada', ControllerPessoas.pegarTurmaCheia);
+
 rotaPessoas.put('/pessoas/:id', ControllerPessoas.atualizarUm);
 
 rotaPessoas.delete('/pessoas/:id', ControllerPessoas.deletarUm);
 
 rotaPessoas.post('/pessoas/:id/recuperar', ControllerPessoas.recuperarPessoa);
+
+rotaPessoas.post(
+  '/pessoas/:estudanteId/cancela',
+  ControllerPessoas.cancelarPessoa
+);
 
 rotaPessoas.get(
   '/pessoas/:estudanteId/matricula',

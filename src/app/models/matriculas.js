@@ -1,10 +1,10 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class Matriculas extends Model {
   static init(sequelize) {
     super.init(
       {
-        status: Sequelize.STRING,
+        status: DataTypes.STRING,
       },
 
       {

@@ -1,13 +1,13 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class Pessoas extends Model {
   static init(sequelize) {
     super.init(
       {
-        nome: Sequelize.STRING,
-        ativo: Sequelize.BOOLEAN,
+        nome: DataTypes.STRING,
+        ativo: DataTypes.BOOLEAN,
         email: {
-          type: Sequelize.STRING,
+          type: DataTypes.STRING,
           validate: {
             isEmail: {
               args: true,
@@ -15,7 +15,7 @@ class Pessoas extends Model {
             },
           },
         },
-        role: Sequelize.STRING,
+        role: DataTypes.STRING,
       },
       {
         sequelize,

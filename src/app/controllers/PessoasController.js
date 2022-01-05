@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { literal } from 'sequelize';
 import Pessoas from '../models/pessoas';
 import Matriculas from '../models/matriculas';
 
@@ -295,6 +296,41 @@ class ControllerPessoas {
       return res.status(400).send({ error: 'Erro ao pegar matrícula' });
     }
   }
-}
 
+  async pegarTurmaCheia(req, res) {
+    const lotacao = 2;
+    try {
+      const turmasLotadas = await Matriculas.findAndCountAll({
+        where: { status: 'confirmado' },
+        attributes: ['turma_id'],
+        group: ['turma_id'],
+        having: literal(`count (turma_id) >= ${lotacao}`),
+      });
+
+      return res.status(200).json(turmasLotadas.count);
+    } catch (err) {
+      return res.status(400).send({ error: 'Erro ao pegar matrícula' });
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  async cancelarPessoa(req, res) {
+    const { estudanteId } = req.params;
+    try {
+      await Pessoas.update(
+        { ativo: true },
+        { where: { id: Number(estudanteId) } }
+      );
+      await Matriculas.update(
+        { status: 'cancelado' },
+        { where: { estudante_id: Number(estudanteId) } }
+      );
+      return res.status(200).json({
+        messagem: `as matrículas do estudante ${estudanteId} foram canceladas`,
+      });
+    } catch {
+      return res.status(400).send({ error: 'Erro ao cancelar a matrícula' });
+    }
+  }
+}
 export default new ControllerPessoas();

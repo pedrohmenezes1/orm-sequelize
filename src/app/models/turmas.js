@@ -1,10 +1,10 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class Turmas extends Model {
   static init(sequelize) {
     super.init(
       {
-        data_inicio: Sequelize.DATEONLY,
+        data_inicio: DataTypes.DATEONLY,
       },
 
       {

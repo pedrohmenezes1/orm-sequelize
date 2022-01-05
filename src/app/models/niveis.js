@@ -1,10 +1,10 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class Niveis extends Model {
   static init(sequelize) {
     super.init(
       {
-        descr_nivel: Sequelize.STRING,
+        descr_nivel: DataTypes.STRING,
       },
       {
         sequelize,
